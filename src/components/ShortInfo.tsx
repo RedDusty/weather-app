@@ -25,14 +25,32 @@ const ShortInfo: React.FC<{
       <p className="text-3xl font-medium mt-2">
         {weather?.name + ', ' + weather?.sys?.country}
       </p>
-      <div className="flex items-center">
+      <div className="flex items-center flex-col mm:flex-row">
         <img
           src={`http://openweathermap.org/img/wn/${weather?.weather[0]?.icon}@2x.png`}
           alt=""
         />
-        <p className="text-6xl font-medium">
-          {temperature.toFixed(1)}&#176;{unit.charAt(0).toUpperCase()}
-        </p>
+        <div className="flex w-full h-full items-center relative -top-4 mm:top-0">
+          <p className="text-6xl font-medium">{temperature.toFixed(1)}&#176;</p>
+          <button
+            className="text-6xl font-medium outline-none bg-white bg-opacity-35 dark:bg-black dark:bg-opacity-35 p-2 rounded-xl"
+            onClick={() => {
+              switch (unit) {
+                case 'celsius':
+                  setUnit('fahrenheit');
+                  break;
+                case 'fahrenheit':
+                  setUnit('kelvin');
+                  break;
+                case 'kelvin':
+                  setUnit('celsius');
+                  break;
+              }
+            }}
+          >
+            {unit.charAt(0).toUpperCase()}
+          </button>
+        </div>
       </div>
     </div>
   );

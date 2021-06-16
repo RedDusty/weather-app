@@ -12,7 +12,10 @@ module.exports = {
       },
       backgroundImage: theme => ({
         'theme-switch': 'linear-gradient(90deg, rgba(0, 0, 0, 1) 50%, rgba(255, 255, 255, 1) 50%)'
-      })
+      }),
+      screens: {
+        'mm': '375px',
+      }
     },
   },
   variants: {
