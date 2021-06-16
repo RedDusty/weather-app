@@ -1,4 +1,6 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { getUnitTemp } from '../functions';
 import { unitType, weatherType } from '../types';
 
 const ShortInfo: React.FC<{
@@ -6,19 +8,20 @@ const ShortInfo: React.FC<{
   unit: unitType;
   setUnit: React.Dispatch<React.SetStateAction<unitType>>;
 }> = ({ weather, unit, setUnit }) => {
+  const { t } = useTranslation();
   let temperature: number = 0;
+  let feelsLike: number = 0;
+  let description: string = t('ERROR_UNDEFINED');
   if (weather?.main?.temp) {
-    switch (unit) {
-      case 'celsius':
-        temperature = weather.main.temp - 273;
-        break;
-      case 'fahrenheit':
-        temperature = 1.8 * (weather.main.temp - 273) + 32;
-        break;
-      default:
-        temperature = weather.main.temp;
-        break;
-    }
+    temperature = getUnitTemp(unit, weather.main.temp);
+  }
+  if (weather?.main?.feels_like) {
+    feelsLike = getUnitTemp(unit, weather.main.feels_like);
+  }
+  if (weather?.weather[0]?.description) {
+    description =
+      weather?.weather[0]?.description?.charAt(0).toUpperCase() +
+      weather?.weather[0]?.description?.slice(1);
   }
   return (
     <div className="w-full flex flex-col items-center text-white dark:text-gray-300">
@@ -38,12 +41,15 @@ const ShortInfo: React.FC<{
               switch (unit) {
                 case 'celsius':
                   setUnit('fahrenheit');
+                  localStorage.setItem('unit', 'fahrenheit');
                   break;
                 case 'fahrenheit':
                   setUnit('kelvin');
+                  localStorage.setItem('unit', 'kelvin');
                   break;
                 case 'kelvin':
                   setUnit('celsius');
+                  localStorage.setItem('unit', 'celsius');
                   break;
               }
             }}
@@ -52,6 +58,11 @@ const ShortInfo: React.FC<{
           </button>
         </div>
       </div>
+      <p className="text-xl">{description}</p>
+      <p className="text-lg">
+        {t('FEELS_LIKE') + feelsLike.toFixed(1)}&#176;
+        {unit.charAt(0).toUpperCase()}
+      </p>
     </div>
   );
 };

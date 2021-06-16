@@ -1,3 +1,5 @@
 {
-  "Search": "Search..."
+  "SEARCH": "Search...",
+  "FEELS_LIKE": "Feels like: ",
+  "ERROR_UNDEFINED": "Unknown error!"
 }

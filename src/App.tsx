@@ -4,24 +4,30 @@ import { geoloc, unitType, weatherType } from './types';
 import http from 'http';
 import Search from './components/Search';
 import ShortInfo from './components/ShortInfo';
-import example from '../public/json/example.json';
 
 function App() {
-  const [location, setLocation] = useState<geoloc>({
-    latitude: 0,
-    longitude: 0,
+  const locationStorage: geoloc = {
+    latitude: Number(localStorage.getItem('latitude')) || 0,
+    longitude: Number(localStorage.getItem('longitude')) || 0,
     isError: 'Loading',
     accuracy: 0,
     isLoading: true,
-  });
-  const [unit, setUnit] = useState<unitType>('celsius');
+  };
+  const [location, setLocation] = useState<geoloc>(locationStorage);
+  const unitStorage: unitType =
+    (localStorage.getItem('unit') as unitType) || 'celsius';
+  const [unit, setUnit] = useState<unitType>(unitStorage);
 
   const [weather, setWeather] = useState<weatherType>();
   useEffect(() => {
     document.body.style.backgroundImage = 'url(/img/clear_sky.png)';
     fetch('json/example.json')
       .then((res) => res.json())
-      .then((values) => setWeather(values));
+      .then((values: weatherType) => {
+        setWeather(values);
+        localStorage.setItem('latitude', String(values.coord?.lat));
+        localStorage.setItem('longitude', String(values.coord?.lon));
+      });
   }, []);
 
   // useEffect(() => {
