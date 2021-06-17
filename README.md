@@ -1,8 +1,7 @@
-# [Weatheredy App](weatheredy.vercel.app) - link
+# [Weatheredy App](https://weatheredy.vercel.app/) - link
 
 ### Currently using a real request, but the example request is commented in code.
-
-# src/App.tsx - 30
+###### src/App.tsx - 30
 
 ### Used:
 
