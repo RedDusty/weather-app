@@ -30,6 +30,22 @@ code {
     monospace;
 }
 
+.wind-short:hover {
+  opacity: 0;
+  user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+.wind-short:hover + .wind-long {
+  display: block;
+}
+
+.wind-long:hover {
+  display: block;
+}
+
 @media screen and (min-width: 1536px) {
   body {
     background-size: cover;

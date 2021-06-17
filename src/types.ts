@@ -118,3 +118,16 @@ export type weatherType = {
   name?: string;
   cod: number;
 };
+
+export type directionType = {
+  long: string | null;
+  short: string | null;
+};
+
+export type loadType = {
+  geoloc: boolean;
+  ip: boolean;
+  endLocation: boolean;
+  fetch: boolean;
+  error: boolean;
+};

@@ -1,5 +1,11 @@
 {
   "SEARCH": "Search...",
   "FEELS_LIKE": "Feels like: ",
-  "ERROR_UNDEFINED": "Unknown error!"
+  "ERROR_UNDEFINED": "Unknown error!",
+  "LOADING": "Loading",
+  "DETAILS": "Details",
+  "BAROMETER": "Barometer",
+  "PRESSURE": "Pressure",
+  "HUMIDITY": "Humidity",
+  "WIND": "Wind"
 }

@@ -1,5 +1,11 @@
 {
   "SEARCH": "Поиск...",
   "FEELS_LIKE": "Чувствуется как: ",
-  "ERROR_UNDEFINED": "Неизвестная ошибка!"
+  "ERROR_UNDEFINED": "Неизвестная ошибка!",
+  "LOADING": "Загрузка",
+  "DETAILS": "Подробнее",
+  "BAROMETER": "Барометр",
+  "PRESSURE": "Давление",
+  "HUMIDITY": "Влажность",
+  "WIND": "Ветер"
 }
