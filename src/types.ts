@@ -37,6 +37,7 @@ type windType = {
   speed?: number;
   deg?: number;
   gust?: number;
+  direction?: directionType;
 };
 
 type cloudsType = {

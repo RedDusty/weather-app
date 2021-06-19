@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getDirection, getUnitTemp } from '../functions';
 import { directionType, loadType, unitType, weatherType } from '../types';
@@ -9,50 +9,106 @@ const ShortInfo: React.FC<{
   setUnit: React.Dispatch<React.SetStateAction<unitType>>;
   load: loadType;
 }> = ({ weather, unit, setUnit, load }) => {
-  const [windHover, setWindHover] = useState<boolean>(false);
   const { t } = useTranslation();
-  let temperature: number = 0;
-  let feelsLike: number = 0;
-  let description: string = t('LOADING');
-  let windDirectional: string = t('LOADING');
-  let windDirectionalShort: string = t('LOADING');
-  let city: string = t('LOADING');
-  let country: string = t('LOADING');
-  if (load.fetch) {
-    city = weather?.name || t('ERROR_UNDEFINED');
-    country = weather?.sys?.country || t('ERROR_UNDEFINED');
-    if (weather?.main?.temp || weather?.main?.temp === 0) {
-      temperature = getUnitTemp(unit, weather.main.temp);
+  const [weatherV, setWeatherV] = useState({
+    temp: 0,
+    feelsLike: 0,
+    desc: t('LOADING'),
+    windDir: t('LOADING'),
+    windDirShort: t('LOADING'),
+    city: '',
+    country: '',
+  });
+  useEffect(() => {
+    if (weather?.weather[0]?.id) {
+      const id: number = weather.weather[0].id;
+      if (id >= 200 && id < 300) {
+        document.body.style.backgroundImage =
+          'url(/img/weather/thunderstorm.jpg)';
+      }
+      if (id >= 300 && id < 400) {
+        document.body.style.backgroundImage = 'url(/img/weather/drizzle.jpg)';
+      }
+      if (id >= 500 && id < 600) {
+        document.body.style.backgroundImage = 'url(/img/weather/rain.jpg)';
+      }
+      if (id >= 600 && id < 700) {
+        document.body.style.backgroundImage = 'url(/img/weather/snow.jpg)';
+      }
+      if (id === 701) {
+        document.body.style.backgroundImage = 'url(/img/weather/mist.jpg)';
+      }
+      if (id === 711) {
+        document.body.style.backgroundImage = 'url(/img/weather/smoke.jpg)';
+      }
+      if (id === 721) {
+        document.body.style.backgroundImage = 'url(/img/weather/haze.jpg)';
+      }
+      // if (id === 731) {
+      //   document.body.style.backgroundImage = '';
+      // }
+      if (id === 741) {
+        document.body.style.backgroundImage = 'url(/img/weather/fog.jpg)';
+      }
+      if (id === 751) {
+        document.body.style.backgroundImage = 'url(/img/weather/sand.jpg)';
+      }
+      if (id === 761) {
+        document.body.style.backgroundImage = 'url(/img/weather/dust.jpg)';
+      }
+      if (id === 762) {
+        document.body.style.backgroundImage =
+          'url(/img/weather/volcanic_ash.jpg)';
+      }
+      if (id === 771) {
+        document.body.style.backgroundImage = 'url(/img/weather/squalls.jpg)';
+      }
+      if (id === 781) {
+        document.body.style.backgroundImage = 'url(/img/weather/tornado.jpg)';
+      }
+      if (id === 800) {
+        document.body.style.backgroundImage = 'url(/img/weather/clear_sky.jpg)';
+      }
+      if (id >= 801 && id < 900) {
+        document.body.style.backgroundImage = 'url(/img/weather/clouds.jpg)';
+      }
     }
-    if (weather?.main?.feels_like || weather?.main?.feels_like === 0) {
-      feelsLike = getUnitTemp(unit, weather.main.feels_like);
-    }
-    if (weather?.weather[0]?.description) {
-      description =
-        weather?.weather[0]?.description?.charAt(0).toUpperCase() +
-        weather?.weather[0]?.description?.slice(1);
-    } else {
-      description = t('ERROR_UNDEFINED');
-    }
-    if (weather?.wind?.deg || weather?.wind?.deg === 0) {
-      const d: directionType = getDirection(weather.wind.deg);
-      windDirectional = d.long ? d.long : t('ERROR_UNDEFINED');
-      windDirectionalShort = d.short ? d.short : t('ERROR_UNDEFINED');
-    } else {
-      windDirectional = t('ERROR_UNDEFINED');
-      windDirectionalShort = t('ERROR_UNDEFINED');
-    }
-  }
+    const d: directionType = getDirection(weather?.wind?.deg || 0);
+    setWeatherV({
+      temp: weather?.main?.temp || 0,
+      feelsLike: weather?.main?.feels_like || 0,
+      desc: weather?.weather[0]?.description
+        ? weather.weather[0].description.charAt(0).toUpperCase() +
+          weather.weather[0].description.slice(1)
+        : t('ERROR_UNDEFINED'),
+      city: weather?.name || t('ERROR_UNDEFINED'),
+      country: weather?.sys?.country || t('ERROR_UNDEFINED'),
+      windDir: d.long || t('ERROR_UNDEFINED'),
+      windDirShort: d.short || t('ERROR_UNDEFINED'),
+    });
+  }, [load.fetch, weather]);
+
   return (
     <div className="w-full flex flex-col items-center text-white">
-      <p className="text-3xl font-medium mt-2">{city + ', ' + country}</p>
+      <p className="text-3xl font-medium mt-2">
+        {weatherV.city + ', ' + weatherV.country}
+      </p>
       <div className="flex items-center flex-col mm:flex-row">
-        <img
-          src={`http://openweathermap.org/img/wn/${weather?.weather[0]?.icon}@2x.png`}
-          alt=""
-        />
+        {
+          // eslint-disable-next-line
+          weather?.cod == 200 ? (
+            <img
+              src={`http://openweathermap.org/img/wn/${weather?.weather[0]?.icon}@2x.png`}
+              alt=""
+            />
+          ) : (
+            <></>
+          )
+        }
         <div className="flex w-full h-full items-center relative -top-4 mm:top-0">
-          <p className="text-6xl font-medium">{temperature.toFixed(1)}&#176;</p>
+          <p className="text-6xl font-medium">
+            {getUnitTemp(unit, weatherV.temp).toFixed(1)}&#176;
+          </p>
           <button
             className="text-6xl font-medium outline-none bg-white bg-opacity-35 dark:bg-black dark:bg-opacity-35 p-2 rounded-xl"
             onClick={() => {
@@ -76,9 +132,10 @@ const ShortInfo: React.FC<{
           </button>
         </div>
       </div>
-      <p className="text-xl">{description}</p>
+      <p className="text-xl">{weatherV.desc}</p>
       <p className="text-lg">
-        {t('FEELS_LIKE') + feelsLike.toFixed(1)}&#176;
+        {t('FEELS_LIKE') + getUnitTemp(unit, weatherV.feelsLike).toFixed(1)}
+        &#176;
         {unit.charAt(0).toUpperCase()}
       </p>
       <hr
@@ -123,24 +180,14 @@ const ShortInfo: React.FC<{
             >
               <path d="M22 12l-20 12 7.289-12-7.289-12z" />
             </svg>
-            <p
-              className={`bg-white bg-opacity-35 dark:bg-black dark:bg-opacity-35 p-2 rounded-xl ml-1 wind-short ${
-                windHover ? 'opacity-0' : 'opacity-100'
-              }`}
-            >
-              {windDirectionalShort}
-            </p>
-            <p
-              className="bg-white bg-opacity-35 dark:bg-black dark:bg-opacity-35 p-2 rounded-xl hidden wind-long relative -left-8"
-              onMouseEnter={() => {
-                setWindHover(true);
-              }}
-              onMouseLeave={() => {
-                setWindHover(false);
-              }}
-            >
-              {windDirectional}
-            </p>
+            <div className="wind-h">
+              <p className="bg-white bg-opacity-35 dark:bg-black dark:bg-opacity-35 p-2 rounded-xl ml-1 wind-short">
+                {weatherV.windDirShort}
+              </p>
+              <p className="bg-white bg-opacity-35 dark:bg-black dark:bg-opacity-35 p-2 rounded-xl wind-long">
+                {weatherV.windDir}
+              </p>
+            </div>
           </div>
         </div>
       </div>

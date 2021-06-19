@@ -29,26 +29,29 @@ function App() {
 
   // EXAMPLE
   // useEffect(() => {
-  // document.body.style.backgroundImage = 'url(/img/clear_sky.png)';
+  //   setLoad({ ...load, geoloc: true, endLocation: true });
   //   fetch('json/example.json')
   //     .then((res) => res.json())
   //     .then((values: weatherType) => {
   //       setWeather(values);
+  //       setLoad({ ...load, fetch: true });
   //       localStorage.setItem('latitude', String(values.coord?.lat));
   //       localStorage.setItem('longitude', String(values.coord?.lon));
   //     });
   // }, []);
 
   useEffect(() => {
-    document.body.style.backgroundImage = 'url(/img/clear_sky.png)';
     function getWeather() {
       fetch(
         `https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=${process.env.REACT_APP_WEATHER}`,
       )
         .then((res) => res.json())
-        .then((value: weatherType) => {
-          setWeather(value);
-          console.log(value);
+        .then((value) => {
+          if (value.cod == 200) {
+            setWeather(value);
+          } else {
+            console.log(value.cod, value.message);
+          }
           localStorage.setItem('latitude', String(value.coord?.lat));
           localStorage.setItem('longitude', String(value.coord?.lon));
           load.fetch = true;

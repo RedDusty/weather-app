@@ -16,6 +16,7 @@ body,
 }
 
 body {
+  background-color: #263238;
   background-repeat: no-repeat;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -30,7 +31,7 @@ code {
     monospace;
 }
 
-.wind-short:hover {
+.wind-h:hover .wind-short {
   opacity: 0;
   user-select: none;
   -ms-user-select: none;
@@ -38,12 +39,14 @@ code {
   -webkit-user-select: none;
 }
 
-.wind-short:hover + .wind-long {
+.wind-h:hover .wind-long {
   display: block;
+  position: absolute;
 }
 
-.wind-long:hover {
-  display: block;
+.wind-long {
+  display: none;
+  margin-top: -40px;
 }
 
 @media screen and (min-width: 1536px) {
