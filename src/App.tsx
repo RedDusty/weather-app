@@ -88,7 +88,7 @@ function App() {
         };
         getIP().then((ip) => {
           fetch(
-            `http://api.ipstack.com/${ip}?access_key=${process.env.REACT_APP_IP}`,
+            `https://api.ipstack.com/${ip}?access_key=${process.env.REACT_APP_IP}`,
           )
             .then((res) => res.json())
             .then((value) => {
