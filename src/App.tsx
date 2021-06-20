@@ -42,20 +42,20 @@ function App() {
 
   useEffect(() => {
     function getWeather() {
-      fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=${process.env.REACT_APP_WEATHER}`,
-      )
-        .then((res) => res.json())
-        .then((value) => {
-          if (value.cod == 200) {
-            setWeather(value);
-          } else {
-            console.log(value.cod, value.message);
-          }
-          localStorage.setItem('latitude', String(value.coord?.lat));
-          localStorage.setItem('longitude', String(value.coord?.lon));
-          load.fetch = true;
-        });
+      // fetch(
+      //   `https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=${process.env.REACT_APP_WEATHER}`,
+      // )
+      //   .then((res) => res.json())
+      //   .then((value) => {
+      //     if (value.cod == 200) {
+      //       setWeather(value);
+      //     } else {
+      //       console.log(value.cod, value.message);
+      //     }
+      //     localStorage.setItem('latitude', String(value.coord?.lat));
+      //     localStorage.setItem('longitude', String(value.coord?.lon));
+      //     load.fetch = true;
+      //   });
     }
     navigator.geolocation.getCurrentPosition(
       (pos: GeolocationPosition) => {
@@ -86,39 +86,40 @@ function App() {
           { host: 'api.ipify.org', port: 80, path: '/' },
           function (resp) {
             resp.on('data', function (ip) {
-              fetch(
-                `http://api.ipstack.com/${ip}?access_key=${process.env.REACT_APP_IP}`,
-              )
-                .then((res) => res.json())
-                .then((value) => {
-                  locReturn.latitude = value.latitude;
-                  locReturn.longitude = value.longitude;
-                  switch (error.code) {
-                    case error.PERMISSION_DENIED:
-                      load.error = true;
-                      locReturn.isError =
-                        'Location: User denied the request for Geolocation.';
-                      break;
-                    case error.POSITION_UNAVAILABLE:
-                      load.error = true;
-                      locReturn.isError =
-                        'Location: Location information is unavailable.';
-                      break;
-                    case error.TIMEOUT:
-                      load.error = true;
-                      locReturn.isError =
-                        'Location: The request to get user location timed out.';
-                      break;
-                    default:
-                      load.error = true;
-                      locReturn.isError =
-                        'Location: An unknown error occurred.';
-                      break;
-                  }
-                  setLocation(locReturn);
-                  load.endLocation = true;
-                  getWeather();
-                });
+              console.log(ip);
+              // fetch(
+              //   `http://api.ipstack.com/${ip}?access_key=${process.env.REACT_APP_IP}`,
+              // )
+              //   .then((res) => res.json())
+              //   .then((value) => {
+              //     locReturn.latitude = value.latitude;
+              //     locReturn.longitude = value.longitude;
+              //     switch (error.code) {
+              //       case error.PERMISSION_DENIED:
+              //         load.error = true;
+              //         locReturn.isError =
+              //           'Location: User denied the request for Geolocation.';
+              //         break;
+              //       case error.POSITION_UNAVAILABLE:
+              //         load.error = true;
+              //         locReturn.isError =
+              //           'Location: Location information is unavailable.';
+              //         break;
+              //       case error.TIMEOUT:
+              //         load.error = true;
+              //         locReturn.isError =
+              //           'Location: The request to get user location timed out.';
+              //         break;
+              //       default:
+              //         load.error = true;
+              //         locReturn.isError =
+              //           'Location: An unknown error occurred.';
+              //         break;
+              //     }
+              //     setLocation(locReturn);
+              //     load.endLocation = true;
+              //     getWeather();
+              //   });
             });
           },
         );
