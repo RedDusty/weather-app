@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 const Search: React.FunctionComponent = () => {
   const { t } = useTranslation();
   return (
-    <div className="bg-white dark:bg-black w-full h-14 flex justify-between items-center bg-opacity-40 dark:bg-opacity-30">
+    <div className="bg-white dark:bg-black w-full h-14 flex justify-between items-center bg-opacity-40 dark:bg-opacity-30 shadow-lg">
       <input
         type="text"
         name=""

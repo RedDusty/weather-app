@@ -2,6 +2,7 @@
   "SEARCH": "Search...",
   "FEELS_LIKE": "Feels like: ",
   "ERROR_UNDEFINED": "Unknown error!",
+  "LOCATION_ERROR": "Weatheredy cannot determine your current location. You must give permission to use your current location, or you can find the desired city yourself.",
   "LOADING": "Loading",
   "DETAILS": "Details",
   "BAROMETER": "Barometer",

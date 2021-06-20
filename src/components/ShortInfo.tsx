@@ -16,8 +16,8 @@ const ShortInfo: React.FC<{
     desc: t('LOADING'),
     windDir: t('LOADING'),
     windDirShort: t('LOADING'),
-    city: '',
-    country: '',
+    city: t('LOADING'),
+    country: t('LOADING'),
   });
   useEffect(() => {
     if (weather?.weather[0]?.id) {
@@ -74,19 +74,21 @@ const ShortInfo: React.FC<{
       }
     }
     const d: directionType = getDirection(weather?.wind?.deg || 0);
-    setWeatherV({
-      temp: weather?.main?.temp || 0,
-      feelsLike: weather?.main?.feels_like || 0,
-      desc: weather?.weather[0]?.description
-        ? weather.weather[0].description.charAt(0).toUpperCase() +
-          weather.weather[0].description.slice(1)
-        : t('ERROR_UNDEFINED'),
-      city: weather?.name || t('ERROR_UNDEFINED'),
-      country: weather?.sys?.country || t('ERROR_UNDEFINED'),
-      windDir: d.long || t('ERROR_UNDEFINED'),
-      windDirShort: d.short || t('ERROR_UNDEFINED'),
-    });
-  }, [load.fetch, weather]);
+    if (load.fetch) {
+      setWeatherV({
+        temp: weather?.main?.temp || 0,
+        feelsLike: weather?.main?.feels_like || 0,
+        desc: weather?.weather[0]?.description
+          ? weather.weather[0].description.charAt(0).toUpperCase() +
+            weather.weather[0].description.slice(1)
+          : t('ERROR_UNDEFINED'),
+        city: weather?.name || t('ERROR_UNDEFINED'),
+        country: weather?.sys?.country || t('ERROR_UNDEFINED'),
+        windDir: d.long || t('ERROR_UNDEFINED'),
+        windDirShort: d.short || t('ERROR_UNDEFINED'),
+      });
+    }
+  }, [load.fetch]);
 
   return (
     <div className="w-full flex flex-col items-center text-white">

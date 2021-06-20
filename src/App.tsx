@@ -4,12 +4,18 @@ import { geoloc, loadType, unitType, weatherType } from './types';
 import Search from './components/Search';
 import ShortInfo from './components/ShortInfo';
 import publicIp from 'public-ip';
+import { useTranslation } from 'react-i18next';
 
-async function getIP() {
-  return await publicIp.v4();
+async function getIP(callback: Function) {
+  callback(
+    await publicIp.v4({
+      fallbackUrls: [],
+    }),
+  );
 }
 
 function App() {
+  const { t } = useTranslation();
   const locationStorage: geoloc = {
     latitude: Number(localStorage.getItem('latitude')) || 0,
     longitude: Number(localStorage.getItem('longitude')) || 0,
@@ -51,6 +57,7 @@ function App() {
       )
         .then((res) => res.json())
         .then((value) => {
+          let dLoad: loadType = load;
           if (value.cod == 200) {
             setWeather(value);
           } else {
@@ -58,13 +65,16 @@ function App() {
           }
           localStorage.setItem('latitude', String(value.coord?.lat));
           localStorage.setItem('longitude', String(value.coord?.lon));
-          load.fetch = true;
+          dLoad.fetch = true;
+          setLoad(dLoad);
         });
     }
     navigator.geolocation.getCurrentPosition(
       (pos: GeolocationPosition) => {
-        load.geoloc = true;
-        load.ip = false;
+        let dLoad: loadType = load;
+        dLoad.geoloc = true;
+        dLoad.ip = false;
+        setLoad(dLoad);
         const locReturn: geoloc = {
           latitude: pos.coords.latitude,
           longitude: pos.coords.longitude,
@@ -73,12 +83,15 @@ function App() {
           isLoading: false,
         };
         setLocation(locReturn);
-        load.endLocation = true;
+        dLoad.endLocation = true;
+        setLoad(dLoad);
         getWeather();
       },
       (error: GeolocationPositionError) => {
-        load.geoloc = false;
-        load.ip = true;
+        let dLoad: loadType = load;
+        dLoad.geoloc = false;
+        dLoad.ip = true;
+        setLoad(dLoad);
         let locReturn: geoloc = {
           latitude: 0,
           longitude: 0,
@@ -86,9 +99,9 @@ function App() {
           isError: null,
           isLoading: false,
         };
-        getIP().then((ip) => {
+        getIP((ip: string) => {
           fetch(
-            `https://api.ipstack.com/${ip}?access_key=${process.env.REACT_APP_IP}`,
+            `http://api.ipstack.com/${ip}?access_key=${process.env.REACT_APP_IP}`,
           )
             .then((res) => res.json())
             .then((value) => {
@@ -96,37 +109,55 @@ function App() {
               locReturn.longitude = value.longitude;
               switch (error.code) {
                 case error.PERMISSION_DENIED:
-                  load.error = true;
+                  dLoad.error = true;
                   locReturn.isError =
                     'Location: User denied the request for Geolocation.';
                   break;
                 case error.POSITION_UNAVAILABLE:
-                  load.error = true;
+                  dLoad.error = true;
                   locReturn.isError =
                     'Location: Location information is unavailable.';
                   break;
                 case error.TIMEOUT:
-                  load.error = true;
+                  dLoad.error = true;
                   locReturn.isError =
                     'Location: The request to get user location timed out.';
                   break;
                 default:
-                  load.error = true;
+                  dLoad.error = true;
                   locReturn.isError = 'Location: An unknown error occurred.';
                   break;
               }
               setLocation(locReturn);
-              load.endLocation = true;
+              dLoad.endLocation = true;
+              setLoad(dLoad);
               getWeather();
             });
         });
       },
     );
-  }, [location.latitude, location.longitude]);
+  }, [location.latitude, location.longitude, navigator.geolocation]);
+  console.log(load);
   return (
     <div className="App bg-white bg-opacity-25 dark:bg-black dark:bg-opacity-25">
       <Search />
-      <ShortInfo weather={weather} unit={unit} setUnit={setUnit} load={load} />
+      {load.geoloc === false && load.ip === false ? (
+        <div className="bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-gray-300 shadow-lg w-full bg-opacity-75 dark:bg-opacity-75 text-xl font-medium mt-6">
+          <p>{t('LOCATION_ERROR')}</p>
+        </div>
+      ) : (
+        <></>
+      )}
+      {load.geoloc || load.ip ? (
+        <ShortInfo
+          weather={weather}
+          unit={unit}
+          setUnit={setUnit}
+          load={load}
+        />
+      ) : (
+        <></>
+      )}
     </div>
   );
 }
