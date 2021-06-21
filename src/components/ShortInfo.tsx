@@ -88,7 +88,7 @@ const ShortInfo: React.FC<{
         windDirShort: d.short || t('ERROR_UNDEFINED'),
       });
     }
-  }, [load.fetch]);
+  }, [weather]);
 
   return (
     <div className="w-full flex flex-col items-center text-white">

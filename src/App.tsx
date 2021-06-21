@@ -119,7 +119,6 @@ function App() {
         fetch(`https://api.db-ip.com/v2/free/self`)
           .then((res) => res.json())
           .then((values) => {
-            console.log(values);
             switch (error.code) {
               case error.PERMISSION_DENIED:
                 dLoad.error = true;
