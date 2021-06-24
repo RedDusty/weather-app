@@ -37,7 +37,7 @@ type windType = {
   speed?: number;
   deg?: number;
   gust?: number;
-  direction?: directionType;
+  direction?: string;
 };
 
 type cloudsType = {
@@ -118,11 +118,6 @@ export type weatherType = {
   id?: number;
   name?: string;
   cod: number;
-};
-
-export type directionType = {
-  long: string | null;
-  short: string | null;
 };
 
 export type loadType = {

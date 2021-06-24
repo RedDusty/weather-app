@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getDirection, getUnitTemp } from '../functions';
-import { directionType, loadType, unitType, weatherType } from '../types';
+import { loadType, unitType, weatherType } from '../types';
 
 const ShortInfo: React.FC<{
   weather: weatherType | undefined;
@@ -16,8 +16,14 @@ const ShortInfo: React.FC<{
     desc: t('LOADING'),
     windDir: t('LOADING'),
     windDirShort: t('LOADING'),
+    windSpeed: t('LOADING'),
+    windGust: t('LOADING'),
     city: t('LOADING'),
     country: t('LOADING'),
+  });
+  const [tempWarning, setTempWarning] = useState({
+    tempClassname: '',
+    tempWarnImg: '',
   });
   useEffect(() => {
     if (weather?.weather[0]?.id) {
@@ -73,7 +79,7 @@ const ShortInfo: React.FC<{
         document.body.style.backgroundImage = 'url(/img/weather/clouds.jpg)';
       }
     }
-    const d: directionType = getDirection(weather?.wind?.deg || 0);
+    const d: string = getDirection(weather?.wind?.deg || 99999);
     if (load.fetch) {
       setWeatherV({
         temp: weather?.main?.temp || 0,
@@ -84,18 +90,51 @@ const ShortInfo: React.FC<{
           : t('ERROR_UNDEFINED'),
         city: weather?.name || t('ERROR_UNDEFINED'),
         country: weather?.sys?.country || t('ERROR_UNDEFINED'),
-        windDir: d.long || t('ERROR_UNDEFINED'),
-        windDirShort: d.short || t('ERROR_UNDEFINED'),
+        windDir: d.length !== 0 ? t(`${d}_Long`) : t('ERROR_UNDEFINED'),
+        windDirShort: d.length !== 0 ? t(d) : t('ERROR_UNDEFINED'),
+        windSpeed: `${weather?.wind?.speed || 0} ${t('METRIC')}`,
+        windGust: `${weather?.wind?.gust || 0} ${t('METRIC')}`,
       });
+      if (weather?.main?.temp) {
+        const temp = weather.main.temp;
+        if (temp >= 298.15 && temp < 303.15) {
+          // 25-30 Сelsius in Kelvin
+          setTempWarning({
+            tempClassname: 'text-yellow-300 dark:text-yellow-300',
+            tempWarnImg: '',
+          });
+        }
+        if (temp >= 303.15) {
+          // 30 С in k
+          setTempWarning({
+            tempClassname: 'text-red-700 dark:text-red-300',
+            tempWarnImg: '',
+          });
+        }
+        if (temp <= 273.15 && temp > 258.15) {
+          // 0 - -15 С in K
+          setTempWarning({
+            tempClassname: 'text-blue-600 dark:text-blue-200',
+            tempWarnImg: '',
+          });
+        }
+        if (temp <= 258.15) {
+          // -15 С in K
+          setTempWarning({
+            tempClassname: 'text-blue-900 dark:text-blue-700',
+            tempWarnImg: '',
+          });
+        }
+      }
     }
-  }, [weather]);
+  }, [weather, load]);
 
   return (
-    <div className="w-full flex flex-col items-center text-white">
+    <div className="w-full flex flex-col items-center text-black dark:text-white">
       <p className="text-3xl font-medium mt-2">
         {weatherV.city + ', ' + weatherV.country}
       </p>
-      <div className="flex items-center flex-col mm:flex-row">
+      <div className="flex items-center flex-col mm:flex-row my-2 px-2 bg-black dark:bg-white bg-opacity-10 dark:bg-opacity-10 rounded-xl">
         {
           // eslint-disable-next-line
           weather?.cod == 200 ? (
@@ -108,11 +147,11 @@ const ShortInfo: React.FC<{
           )
         }
         <div className="flex w-full h-full items-center relative -top-4 mm:top-0">
-          <p className="text-6xl font-medium">
+          <p className={`text-6xl font-medium ${tempWarning.tempClassname}`}>
             {getUnitTemp(unit, weatherV.temp).toFixed(1)}&#176;
           </p>
           <button
-            className="text-6xl font-medium outline-none bg-white bg-opacity-35 dark:bg-black dark:bg-opacity-35 p-2 rounded-xl"
+            className={`text-6xl font-medium outline-none bg-white hover:bg-gray-300 hover:bg-opacity-75 bg-opacity-35 dark:bg-black dark:hover:bg-gray-700 dark:hover:bg-opacity-75 dark:bg-opacity-35 ml-2 p-2 rounded-xl ${tempWarning.tempClassname}`}
             onClick={() => {
               switch (unit) {
                 case 'celsius':
@@ -186,10 +225,12 @@ const ShortInfo: React.FC<{
               <p className="bg-white bg-opacity-35 dark:bg-black dark:bg-opacity-35 p-2 rounded-xl ml-1 wind-short">
                 {weatherV.windDirShort}
               </p>
-              <p className="bg-white bg-opacity-35 dark:bg-black dark:bg-opacity-35 p-2 rounded-xl wind-long">
+              <p className="bg-white bg-opacity-100 dark:bg-black dark:bg-opacity-100 p-2 rounded-xl ml-1 wind-long">
                 {weatherV.windDir}
               </p>
             </div>
+            <p className="ml-2">{weatherV.windSpeed}</p>
+            <p className="ml-4">{t('GUST') + ': ' + weatherV.windGust}</p>
           </div>
         </div>
       </div>

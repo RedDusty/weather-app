@@ -31,21 +31,34 @@ function App() {
 
   // EXAMPLE
   // useEffect(() => {
-  //   setLoad({ ...load, geoloc: true, endLocation: true });
+  //   setLoad({
+  //     endLocation: true,
+  //     error: false,
+  //     fetch: false,
+  //     geoloc: true,
+  //     ip: false,
+  //   });
   //   fetch('json/example.json')
   //     .then((res) => res.json())
   //     .then((values: weatherType) => {
   //       setWeather(values);
-  //       setLoad({ ...load, fetch: true });
+  //       setLoad({
+  //         endLocation: true,
+  //         error: false,
+  //         fetch: true,
+  //         geoloc: true,
+  //         ip: false,
+  //       });
   //       localStorage.setItem('latitude', String(values.coord?.lat));
   //       localStorage.setItem('longitude', String(values.coord?.lon));
-  //     });
+  //     })
+  //     .catch((error) => console.log(error));
   // }, []);
 
   useEffect(() => {
-    function getWeatherCoords() {
+    function getWeatherCoords(latitude: number, longitude: number) {
       fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=${process.env.REACT_APP_WEATHER}`,
+        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${process.env.REACT_APP_WEATHER}`,
       )
         .then((res) => res.json())
         .then((value) => {
@@ -102,7 +115,7 @@ function App() {
         setLocation(locReturn);
         dLoad.endLocation = true;
         setLoad(dLoad);
-        getWeatherCoords();
+        getWeatherCoords(pos.coords.latitude, pos.coords.longitude);
       },
       (error: GeolocationPositionError) => {
         let dLoad: loadType = load;

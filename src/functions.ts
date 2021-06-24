@@ -1,4 +1,4 @@
-import { directionType, unitType } from './types';
+import { unitType } from './types';
 
 export const getCelsius: (kelvin: number) => number = (kelvin: number) => {
   return kelvin - 273;
@@ -22,68 +22,46 @@ export const getUnitTemp: (unit: unitType, temp: number) => number = (
   }
 };
 
-export const getDirection: (direction: number) => directionType = (
+export const getDirection: (direction: number) => string = (
   direction: number,
 ) => {
-  let windDirectional: string | null;
-  let windDirectionalShort: string | null;
+  let windDirectional: string | 'N';
   const d: number = direction;
-  let directions: directionType;
   if (d >= 78 && d < 101) {
-    windDirectional = 'East';
-    windDirectionalShort = 'E';
+    windDirectional = 'E';
   } else if (d >= 101 && d < 123) {
-    windDirectional = 'Ease South East';
-    windDirectionalShort = 'ESE';
+    windDirectional = 'ESE';
   } else if (d >= 123 && d < 146) {
-    windDirectional = 'South East';
-    windDirectionalShort = 'SE';
+    windDirectional = 'SE';
   } else if (d >= 146 && d < 168) {
-    windDirectional = 'South South East';
-    windDirectionalShort = 'SSE';
+    windDirectional = 'SSE';
   } else if (d >= 168 && d < 191) {
-    windDirectional = 'South';
-    windDirectionalShort = 'S';
+    windDirectional = 'S';
   } else if (d >= 191 && d < 213) {
-    windDirectional = 'South South West';
-    windDirectionalShort = 'SSW';
+    windDirectional = 'SSW';
   } else if (d >= 213 && d < 236) {
-    windDirectional = 'South West';
-    windDirectionalShort = 'SW';
+    windDirectional = 'SW';
   } else if (d >= 236 && d < 258) {
-    windDirectional = 'West South West';
-    windDirectionalShort = 'WSW';
+    windDirectional = 'WSW';
   } else if (d >= 258 && d < 281) {
-    windDirectional = 'West';
-    windDirectionalShort = 'W';
+    windDirectional = 'W';
   } else if (d >= 281 && d < 303) {
-    windDirectional = 'West North West';
-    windDirectionalShort = 'WNW';
+    windDirectional = 'WNW';
   } else if (d >= 303 && d < 326) {
-    windDirectional = 'North West';
-    windDirectionalShort = 'NW';
+    windDirectional = 'NW';
   } else if (d >= 326 && d < 348) {
-    windDirectional = 'North North West';
-    windDirectionalShort = 'NNW';
+    windDirectional = 'NNW';
   } else if ((d >= 348 && d <= 360) || (d >= 0 && d < 11)) {
-    windDirectional = 'North';
-    windDirectionalShort = 'N';
+    windDirectional = 'N';
   } else if (d >= 11 && d < 33) {
-    windDirectional = 'North North East';
-    windDirectionalShort = 'NNE';
+    windDirectional = 'NNE';
   } else if (d >= 33 && d < 56) {
-    windDirectional = 'North East';
-    windDirectionalShort = 'NE';
+    windDirectional = 'NE';
   } else if (d >= 56 && d < 78) {
-    windDirectional = 'East East North';
-    windDirectionalShort = 'EEN';
+    windDirectional = 'EEN';
   } else {
-    windDirectional = null;
-    windDirectionalShort = null;
+    windDirectional = '';
+    windDirectional = '';
   }
-  directions = {
-    long: windDirectional,
-    short: windDirectionalShort,
-  };
-  return directions;
+  return windDirectional;
 };
