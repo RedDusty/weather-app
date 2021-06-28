@@ -1,14 +1,22 @@
 import { unitType } from './types';
 
-export const getCelsius: (kelvin: number) => number = (kelvin: number) => {
-  return kelvin - 273;
+export const getCelsius: (arg0: number) => number = (kelvin: number) => {
+  return kelvin - 273.15;
 };
 
-export const getFahrenheit: (kelvin: number) => number = (kelvin: number) => {
-  return 1.8 * (kelvin - 273) + 32;
+export const getFahrenheit: (arg0: number) => number = (kelvin: number) => {
+  return 1.8 * (kelvin - 273.15) + 32;
 };
 
-export const getUnitTemp: (unit: unitType, temp: number) => number = (
+/**
+ * Scale of temperature.
+ * @see https://en.wikipedia.org/wiki/Scale_of_temperature
+ *
+ * @param unit @type {'celsius'} @type {'fahrenheit'} @type {'kelvin'} @type {string}
+ * @param temp @type {number} @type {'kelvin'}
+ * @returns {number}
+ */
+export const getUnitTemp: (arg0: unitType, arg1: number) => number = (
   unit: unitType,
   temp: number,
 ) => {
@@ -22,9 +30,41 @@ export const getUnitTemp: (unit: unitType, temp: number) => number = (
   }
 };
 
-export const getDirection: (direction: number) => string = (
-  direction: number,
-) => {
+/**
+ * Dew point calculation.
+ * @see https://en.wikipedia.org/wiki/Dew_point
+ *
+ * @param unit @type {unitType}
+ * @param temperature in celsius @type {number}
+ * @param humidity @type {number}
+ * @returns {number}
+ */
+export const getDewPoint: (
+  arg0: unitType,
+  arg1: number,
+  arg3: number,
+) => number = (unit: unitType, temperature: number, humidity: number) => {
+  const temperatureCelsius = getUnitTemp('celsius', temperature);
+  const a = 17.27;
+  const b = 237.7;
+
+  const temp =
+    (a * temperatureCelsius) / (b + temperatureCelsius) +
+    Math.log(humidity / 100);
+
+  const dew = (b * temp) / (a - temp);
+
+  switch (unit) {
+    case 'celsius':
+      return dew;
+    case 'fahrenheit':
+      return dew * 1.8 + 32;
+    default:
+      return dew + 273.15;
+  }
+};
+
+export const getDirection: (arg0: number) => string = (direction: number) => {
   let windDirectional: string | 'N';
   const d: number = direction;
   if (d >= 78 && d < 101) {

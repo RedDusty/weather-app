@@ -76,7 +76,7 @@ function App() {
     }
     function getWeatherCity(city: string, country: string) {
       fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}$units=metric&APPID=198cd283dcf7843f856ffac9637c3bbd`,
+        `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}$units=metric&appid=${process.env.REACT_APP_WEATHER}`,
       )
         .then((res) => res.json())
         .then((value) => {

@@ -7,6 +7,21 @@ button:focus {
   @apply outline-none;
 }
 
+.btn-select {
+  -webkit-touch-callout: text;
+  -webkit-user-select: text;
+  -khtml-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+@layer components {
+  .box-transparent {
+    @apply bg-white dark:bg-black bg-opacity-10 dark:bg-opacity-10 rounded-xl p-2;
+  }
+}
+
 html,
 body,
 #root,
@@ -30,7 +45,7 @@ code {
     monospace;
 }
 
-.wind-h:hover .wind-short {
+.info-h:hover .info-short {
   opacity: 0;
   user-select: none;
   -ms-user-select: none;
@@ -38,14 +53,13 @@ code {
   -webkit-user-select: none;
 }
 
-.wind-h:hover .wind-long {
-  display: block;
+.info-h:hover .info-long {
+  display: flex;
   position: absolute;
 }
 
-.wind-long {
+.info-long {
   display: none;
-  margin-top: -40px;
 }
 
 @media screen and (min-width: 1536px) {
