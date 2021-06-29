@@ -18,7 +18,7 @@ button:focus {
 
 @layer components {
   .box-transparent {
-    @apply bg-white dark:bg-black bg-opacity-10 dark:bg-opacity-10 rounded-xl p-2;
+    @apply bg-white dark:bg-black bg-opacity-25 dark:bg-opacity-25 rounded-xl p-2 flex flex-col items-center;
   }
 }
 
@@ -60,6 +60,36 @@ code {
 
 .info-long {
   display: none;
+}
+
+.info-display {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+.info-display-tip {
+  display: none;
+  position: absolute;
+  padding: 4px;
+  border-radius: 8px;
+}
+
+.info-display:hover ~ .info-display-tip {
+  display: block;
+  margin-top: -32px;
+}
+
+.info-display:checked ~ .info-display-block {
+  display: none;
+}
+
+hr {
+  transition: 0.25s ease-in-out;
 }
 
 @media screen and (min-width: 1536px) {

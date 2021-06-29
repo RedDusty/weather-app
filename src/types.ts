@@ -127,3 +127,10 @@ export type loadType = {
   fetch: boolean;
   error: boolean;
 };
+
+export type timeType = {
+  timezone: Number;
+  sunrise: Date;
+  sunset: Date;
+  dt: Date;
+};

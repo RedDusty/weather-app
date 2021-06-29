@@ -64,6 +64,52 @@ export const getDewPoint: (
   }
 };
 
+/**
+ * Difference between two dates.
+ *
+ * @param time @type {number} future time
+ * @returns {string}
+ */
+export const getTimeLeft: (arg0: number) => string = (time: number) => {
+  const current: number = new Date().getTime();
+
+  let difference: string = '';
+
+  let delta: number = Math.abs(time - current) / 1000;
+
+  const days = Math.floor(delta / 86400);
+  delta -= days * 86400;
+  if (days !== 0) {
+    difference = difference + ('0' + days.toFixed(0)).slice(-2);
+  }
+
+  const hours = Math.floor(delta / 3600) % 24;
+  delta -= hours * 3600;
+  if (hours !== 0) {
+    difference =
+      difference + (days !== 0 ? ':' : '') + ('0' + hours.toFixed(0)).slice(-2);
+  }
+
+  const minutes = Math.floor(delta / 60) % 60;
+  delta -= minutes * 60;
+  if (minutes !== 0) {
+    difference =
+      difference +
+      (hours !== 0 ? ':' : '') +
+      ('0' + minutes.toFixed(0)).slice(-2);
+  }
+
+  const seconds = delta % 60;
+  if (seconds !== 0) {
+    difference =
+      difference +
+      (minutes !== 0 ? ':' : '') +
+      ('0' + seconds.toFixed(0)).slice(-2);
+  }
+
+  return difference;
+};
+
 export const getDirection: (arg0: number) => string = (direction: number) => {
   let windDirectional: string | 'N';
   const d: number = direction;

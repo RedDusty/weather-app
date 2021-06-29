@@ -1,35 +1,40 @@
 {
-  "coord": { "lon": 139.6917, "lat": 35.6895 },
+  "coord": { "lon": 31.2833, "lat": 58.5167 },
   "weather": [
     {
-      "id": 803,
-      "main": "Clouds",
-      "description": "broken clouds",
-      "icon": "04d"
+      "id": 500,
+      "main": "Rain",
+      "description": "light rain",
+      "icon": "10d"
     }
   ],
   "base": "stations",
   "main": {
-    "temp": 295.88,
-    "feels_like": 296.14,
-    "pressure": 1007,
-    "humidity": 74,
-    "temp_min": 294.29,
-    "temp_max": 297.47
+    "temp": 287.04,
+    "feels_like": 286.94,
+    "temp_min": 287.04,
+    "temp_max": 287.04,
+    "pressure": 1005,
+    "humidity": 94,
+    "sea_level": 1005,
+    "grnd_level": 1002
   },
-  "visibility": 10000,
-  "wind": { "speed": 0.89, "deg": 135, "gust": 2.68 },
-  "clouds": { "all": 75 },
-  "dt": 1623836676,
+  "visibility": 7322,
+  "wind": {
+    "speed": 4.76,
+    "deg": 324,
+    "gust": 13.78
+  },
+  "rain": { "1h": 1 },
+  "clouds": { "all": 100 },
+  "dt": 1624979730,
   "sys": {
-    "type": 2,
-    "id": 2038398,
-    "country": "JP",
-    "sunrise": 1623785099,
-    "sunset": 1623837530
+    "country": "RU",
+    "sunrise": 1624927823,
+    "sunset": 1624993562
   },
-  "timezone": 32400,
-  "id": 1850144,
-  "name": "Tokyo",
+  "timezone": 10800,
+  "id": 519336,
+  "name": "Veliky Novgorod",
   "cod": 200
 }

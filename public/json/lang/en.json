@@ -1,5 +1,7 @@
 {
   "SEARCH": "Search...",
+  "CLICK_HIDE": "Click to hide",
+  "CLICK_SHOW": "Click to show",
   "FEELS_LIKE": "Feels like: ",
   "ERROR_UNDEFINED": "Unknown error!",
   "LOCATION_ERROR": "Weatheredy cannot determine your current location. You must give permission to use your current location, or you can find the desired city yourself.",
@@ -15,6 +17,9 @@
   "VISIBILITY": "Visibility",
   "KM": "km",
   "M": "m",
+  "TIME": "Time",
+  "SUNSET": "Sunset",
+  "SUNRISE": "Sunrise",
   "E": "E",
   "E_Long": "East",
   "ESE": "ESE",

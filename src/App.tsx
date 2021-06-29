@@ -4,6 +4,8 @@ import { geoloc, loadType, unitType, weatherType } from './types';
 import Search from './components/Search';
 import ShortInfo from './components/ShortInfo';
 import { useTranslation } from 'react-i18next';
+import TimeInfo from './components/TimeInfo';
+import Details from './components/Details';
 
 function App() {
   const { t } = useTranslation();
@@ -187,12 +189,16 @@ function App() {
         <></>
       )}
       {load.geoloc || load.ip ? (
-        <ShortInfo
-          weather={weather}
-          unit={unit}
-          setUnit={setUnit}
-          load={load}
-        />
+        <>
+          <ShortInfo
+            weather={weather}
+            unit={unit}
+            setUnit={setUnit}
+            load={load}
+          />
+          <Details weather={weather} load={load} unit={unit} />
+          <TimeInfo weather={weather} load={load} />
+        </>
       ) : (
         <></>
       )}
