@@ -21,7 +21,9 @@ const Details: React.FC<{
   });
   const [isShow, setShow] = useState<boolean>(true);
   useEffect(() => {
-    const d: string = getDirection(weather?.wind?.deg || 99999);
+    const d: string = getDirection(
+      weather?.wind?.deg === 0 ? 0 : weather?.wind?.deg || 99999,
+    );
     setDetails({
       pressure: weather?.main?.pressure || 0,
       humidity: weather?.main?.humidity || 0,
@@ -97,7 +99,7 @@ const Details: React.FC<{
                 viewBox="0 0 24 24"
                 className="ml-2 fill-current text-white"
                 style={{
-                  transform: `rotate(${(weather?.wind?.deg || 0) + 90}deg)`,
+                  transform: `rotate(${(weather?.wind?.deg || 0) - 90}deg)`,
                 }}
               >
                 <path d="M22 12l-20 12 7.289-12-7.289-12z" />

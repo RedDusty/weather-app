@@ -129,8 +129,8 @@ export type loadType = {
 };
 
 export type timeType = {
-  timezone: Number;
-  sunrise: Date;
-  sunset: Date;
+  timezone: number;
+  sunrise: number;
+  sunset: number;
   dt: Date;
 };

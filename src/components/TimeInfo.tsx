@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getTimeLeft } from '../functions';
 import { loadType, timeType, weatherType } from '../types';
 import TimeInfoTimer from './subcomponents/TimeInfoTimer';
 
@@ -9,23 +8,28 @@ const TimeInfo: React.FC<{ weather: weatherType | undefined; load: loadType }> =
     const { t } = useTranslation();
     const [time, setTime] = useState<timeType>({
       timezone: 0,
-      sunrise: new Date(),
-      sunset: new Date(),
+      sunrise: 0,
+      sunset: 0,
       dt: new Date(),
     });
     const [isShow, setShow] = useState<boolean>(true);
 
     useEffect(() => {
       setTime({
-        dt: new Date(weather?.timezone || 0),
-        sunrise: new Date((weather?.sys?.sunrise || 0) * 1000),
-        sunset: new Date((weather?.sys?.sunset || 0) * 1000),
-        timezone: weather?.timezone || 0,
+        dt: new Date((weather?.timezone || 0) * 1000),
+        sunrise: (weather?.sys?.sunrise || 0) * 1000,
+        sunset: (weather?.sys?.sunset || 0) * 1000,
+        timezone: (weather?.timezone || 0) * 1000,
       });
     }, [weather, load]);
 
     const renderSunset = time.sunset ? (
-      <TimeInfoTimer time={time.sunset} timeString={t('SUNSET')} key="sunset" />
+      <TimeInfoTimer
+        time={time.sunset}
+        timeString={t('SUNSET')}
+        timezone={time.timezone}
+        key="sunset"
+      />
     ) : (
       <></>
     );
@@ -33,6 +37,7 @@ const TimeInfo: React.FC<{ weather: weatherType | undefined; load: loadType }> =
       <TimeInfoTimer
         time={time.sunrise}
         timeString={t('SUNRISE')}
+        timezone={time.timezone}
         key="sunrise"
       />
     ) : (

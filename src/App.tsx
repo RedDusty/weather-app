@@ -31,31 +31,7 @@ function App() {
 
   const [weather, setWeather] = useState<weatherType>();
 
-  // EXAMPLE
-  // useEffect(() => {
-  //   setLoad({
-  //     endLocation: true,
-  //     error: false,
-  //     fetch: false,
-  //     geoloc: true,
-  //     ip: false,
-  //   });
-  //   fetch('json/example.json')
-  //     .then((res) => res.json())
-  //     .then((values: weatherType) => {
-  //       setWeather(values);
-  //       setLoad({
-  //         endLocation: true,
-  //         error: false,
-  //         fetch: true,
-  //         geoloc: true,
-  //         ip: false,
-  //       });
-  //       localStorage.setItem('latitude', String(values.coord?.lat));
-  //       localStorage.setItem('longitude', String(values.coord?.lon));
-  //     })
-  //     .catch((error) => console.log(error));
-  // }, []);
+  const isDev: boolean = false;
 
   useEffect(() => {
     function getWeatherCoords(latitude: number, longitude: number) {
@@ -65,7 +41,7 @@ function App() {
         .then((res) => res.json())
         .then((value) => {
           let dLoad: loadType = load;
-          if (value.cod == 200) {
+          if (value.cod === 200) {
             setWeather(value);
             localStorage.setItem('latitude', String(value.coord?.lat));
             localStorage.setItem('longitude', String(value.coord?.lon));
@@ -83,7 +59,7 @@ function App() {
         .then((res) => res.json())
         .then((value) => {
           let dLoad: loadType = load;
-          if (value.cod == 200) {
+          if (value.cod === 200) {
             setWeather(value);
             localStorage.setItem('latitude', String(value.coord?.lat));
             localStorage.setItem('longitude', String(value.coord?.lon));
@@ -101,67 +77,95 @@ function App() {
           }
         });
     }
-    navigator.geolocation.getCurrentPosition(
-      (pos: GeolocationPosition) => {
-        let dLoad: loadType = load;
-        dLoad.geoloc = true;
-        dLoad.ip = false;
-        setLoad(dLoad);
-        const locReturn: geoloc = {
-          latitude: pos.coords.latitude,
-          longitude: pos.coords.longitude,
-          isError: null,
-          accuracy: pos.coords.accuracy,
-          isLoading: false,
-        };
-        setLocation(locReturn);
-        dLoad.endLocation = true;
-        setLoad(dLoad);
-        getWeatherCoords(pos.coords.latitude, pos.coords.longitude);
-      },
-      (error: GeolocationPositionError) => {
-        let dLoad: loadType = load;
-        dLoad.geoloc = false;
-        dLoad.ip = true;
-        setLoad(dLoad);
-        let locReturn: geoloc = {
-          latitude: 0,
-          longitude: 0,
-          accuracy: 0,
-          isError: null,
-          isLoading: false,
-        };
-        fetch(`https://api.db-ip.com/v2/free/self`)
-          .then((res) => res.json())
-          .then((values) => {
-            switch (error.code) {
-              case error.PERMISSION_DENIED:
-                dLoad.error = true;
-                locReturn.isError =
-                  'Location: User denied the request for Geolocation.';
-                break;
-              case error.POSITION_UNAVAILABLE:
-                dLoad.error = true;
-                locReturn.isError =
-                  'Location: Location information is unavailable.';
-                break;
-              case error.TIMEOUT:
-                dLoad.error = true;
-                locReturn.isError =
-                  'Location: The request to get user location timed out.';
-                break;
-              default:
-                dLoad.error = true;
-                locReturn.isError = 'Location: An unknown error occurred.';
-                break;
-            }
-            setLocation(locReturn);
-            dLoad.endLocation = true;
-            setLoad(dLoad);
-            getWeatherCity(values.city, values.countryCode);
+    // EXAMPLE
+    if (isDev) {
+      setLoad({
+        endLocation: true,
+        error: false,
+        fetch: false,
+        geoloc: true,
+        ip: false,
+      });
+      fetch('json/example.json')
+        .then((res) => res.json())
+        .then((values: weatherType) => {
+          setWeather(values);
+          setLoad({
+            endLocation: true,
+            error: false,
+            fetch: true,
+            geoloc: true,
+            ip: false,
           });
-      },
-    );
+          localStorage.setItem('latitude', String(values.coord?.lat));
+          localStorage.setItem('longitude', String(values.coord?.lon));
+        })
+        .catch((error) => console.log(error));
+    }
+    // REAL REQUEST
+    if (!isDev) {
+      navigator.geolocation.getCurrentPosition(
+        (pos: GeolocationPosition) => {
+          let dLoad: loadType = load;
+          dLoad.geoloc = true;
+          dLoad.ip = false;
+          setLoad(dLoad);
+          const locReturn: geoloc = {
+            latitude: pos.coords.latitude,
+            longitude: pos.coords.longitude,
+            isError: null,
+            accuracy: pos.coords.accuracy,
+            isLoading: false,
+          };
+          setLocation(locReturn);
+          dLoad.endLocation = true;
+          setLoad(dLoad);
+          getWeatherCoords(pos.coords.latitude, pos.coords.longitude);
+        },
+        (error: GeolocationPositionError) => {
+          let dLoad: loadType = load;
+          dLoad.geoloc = false;
+          dLoad.ip = true;
+          setLoad(dLoad);
+          let locReturn: geoloc = {
+            latitude: 0,
+            longitude: 0,
+            accuracy: 0,
+            isError: null,
+            isLoading: false,
+          };
+          fetch(`https://api.db-ip.com/v2/free/self`)
+            .then((res) => res.json())
+            .then((values) => {
+              switch (error.code) {
+                case error.PERMISSION_DENIED:
+                  dLoad.error = true;
+                  locReturn.isError =
+                    'Location: User denied the request for Geolocation.';
+                  break;
+                case error.POSITION_UNAVAILABLE:
+                  dLoad.error = true;
+                  locReturn.isError =
+                    'Location: Location information is unavailable.';
+                  break;
+                case error.TIMEOUT:
+                  dLoad.error = true;
+                  locReturn.isError =
+                    'Location: The request to get user location timed out.';
+                  break;
+                default:
+                  dLoad.error = true;
+                  locReturn.isError = 'Location: An unknown error occurred.';
+                  break;
+              }
+              setLocation(locReturn);
+              dLoad.endLocation = true;
+              setLoad(dLoad);
+              getWeatherCity(values.city, values.countryCode);
+            });
+        },
+      );
+    }
   }, [navigator.geolocation, weatherUpdate]);
   return (
     <div className="App bg-white bg-opacity-25 dark:bg-black dark:bg-opacity-25">

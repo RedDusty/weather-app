@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getDewPoint, getDirection, getUnitTemp } from '../functions';
+import { getUnitTemp } from '../functions';
 import { loadType, unitType, weatherType } from '../types';
 
 const ShortInfo: React.FC<{
@@ -14,13 +14,8 @@ const ShortInfo: React.FC<{
     temp: 0,
     feelsLike: 0,
     desc: t('LOADING'),
-    windDir: t('LOADING'),
-    windDirShort: t('LOADING'),
-    windSpeed: t('LOADING'),
-    windGust: t('LOADING'),
     city: t('LOADING'),
     country: t('LOADING'),
-    visibility: 0,
   });
   const [tempWarning, setTempWarning] = useState({
     tempClassname: '',
@@ -80,7 +75,6 @@ const ShortInfo: React.FC<{
         document.body.style.backgroundImage = 'url(/img/weather/clouds.jpg)';
       }
     }
-    const d: string = getDirection(weather?.wind?.deg || 99999);
     if (load.fetch) {
       setWeatherV({
         temp: weather?.main?.temp || 0,
@@ -91,11 +85,6 @@ const ShortInfo: React.FC<{
           : t('ERROR_UNDEFINED'),
         city: weather?.name || t('ERROR_UNDEFINED'),
         country: weather?.sys?.country || t('ERROR_UNDEFINED'),
-        windDir: d.length !== 0 ? t(`${d}_Long`) : t('ERROR_UNDEFINED'),
-        windDirShort: d.length !== 0 ? t(d) : t('ERROR_UNDEFINED'),
-        windSpeed: `${weather?.wind?.speed || 0} ${t('METRIC')}`,
-        windGust: `${weather?.wind?.gust || 0} ${t('METRIC')}`,
-        visibility: weather?.visibility || 0,
       });
       if (weather?.main?.temp) {
         const temp = weather.main.temp;
@@ -183,7 +172,7 @@ const ShortInfo: React.FC<{
           {unit.charAt(0).toUpperCase()}
         </p>
       </div>
-      </div>
+    </div>
   );
 };
 
