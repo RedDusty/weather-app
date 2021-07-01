@@ -1,9 +1,16 @@
 export type geoloc = {
-  latitude: number;
-  longitude: number;
-  isError: string | null;
+  coord: coordType;
   accuracy: number;
+};
+
+export type loadType = {
+  geoloc: boolean;
+  ip: boolean;
+  fetch: boolean;
+  error: boolean;
+  errorMessage: string;
   isLoading: boolean;
+  search: boolean;
 };
 
 export type unitType = 'kelvin' | 'celsius' | 'fahrenheit';
@@ -120,17 +127,17 @@ export type weatherType = {
   cod: number;
 };
 
-export type loadType = {
-  geoloc: boolean;
-  ip: boolean;
-  endLocation: boolean;
-  fetch: boolean;
-  error: boolean;
-};
-
 export type timeType = {
   timezone: number;
   sunrise: number;
   sunset: number;
   dt: Date;
+};
+
+export type cityType = {
+  id: number;
+  name: string;
+  state: string;
+  country: string;
+  coord: coordType;
 };

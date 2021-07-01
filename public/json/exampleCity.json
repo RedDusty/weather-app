@@ -1,0 +1,202 @@
+[
+  {
+    "id": 4338415,
+    "name": "Rayville",
+    "state": "LA",
+    "country": "US",
+    "coord": {
+      "lon": -91.754852,
+      "lat": 32.47736
+    }
+  },
+  {
+    "id": 4338615,
+    "name": "Reserve",
+    "state": "LA",
+    "country": "US",
+    "coord": {
+      "lon": -90.55175,
+      "lat": 30.05381
+    }
+  },
+  {
+    "id": 4338720,
+    "name": "Richwood",
+    "state": "LA",
+    "country": "US",
+    "coord": {
+      "lon": -92.084862,
+      "lat": 32.448761
+    }
+  },
+  {
+    "id": 4338772,
+    "name": "Ringgold",
+    "state": "LA",
+    "country": "US",
+    "coord": {
+      "lon": -93.279892,
+      "lat": 32.328491
+    }
+  },
+  {
+    "id": 4338818,
+    "name": "River Ridge",
+    "state": "LA",
+    "country": "US",
+    "coord": {
+      "lon": -90.21563,
+      "lat": 29.960199
+    }
+  },
+  {
+    "id": 4339148,
+    "name": "Roseland",
+    "state": "LA",
+    "country": "US",
+    "coord": {
+      "lon": -90.511757,
+      "lat": 30.76491
+    }
+  },
+  {
+    "id": 4339179,
+    "name": "Rosepine",
+    "state": "LA",
+    "country": "US",
+    "coord": {
+      "lon": -93.282387,
+      "lat": 30.91991
+    }
+  },
+  {
+    "id": 4339348,
+    "name": "Ruston",
+    "state": "LA",
+    "country": "US",
+    "coord": {
+      "lon": -92.637932,
+      "lat": 32.523209
+    }
+  },
+  {
+    "id": 4339526,
+    "name": "Saint Bernard Parish",
+    "state": "LA",
+    "country": "US",
+    "coord": {
+      "lon": -89.650063,
+      "lat": 29.85021
+    }
+  },
+  {
+    "id": 4339684,
+    "name": "Saint Francisville",
+    "state": "LA",
+    "country": "US",
+    "coord": {
+      "lon": -91.376503,
+      "lat": 30.7799
+    }
+  },
+  {
+    "id": 4339690,
+    "name": "Saint Gabriel",
+    "state": "LA",
+    "country": "US",
+    "coord": {
+      "lon": -91.099274,
+      "lat": 30.2577
+    }
+  },
+  {
+    "id": 4339881,
+    "name": "Saint John the Baptist Parish",
+    "state": "LA",
+    "country": "US",
+    "coord": {
+      "lon": -90.550087,
+      "lat": 30.0502
+    }
+  },
+  {
+    "id": 4339934,
+    "name": "Saint Joseph",
+    "state": "LA",
+    "country": "US",
+    "coord": {
+      "lon": -91.233452,
+      "lat": 31.918489
+    }
+  },
+  {
+    "id": 4340045,
+    "name": "Saint Landry Parish",
+    "state": "LA",
+    "country": "US",
+    "coord": {
+      "lon": -92.000389,
+      "lat": 30.63353
+    }
+  },
+  {
+    "id": 4340196,
+    "name": "Saint Martinville",
+    "state": "LA",
+    "country": "US",
+    "coord": {
+      "lon": -91.83345,
+      "lat": 30.1252
+    }
+  },
+  {
+    "id": 4340551,
+    "name": "Saint Rose",
+    "state": "LA",
+    "country": "US",
+    "coord": {
+      "lon": -90.323128,
+      "lat": 29.946871
+    }
+  },
+  {
+    "id": 4340579,
+    "name": "Saint Tammany Parish",
+    "state": "LA",
+    "country": "US",
+    "coord": {
+      "lon": -89.966743,
+      "lat": 30.433531
+    }
+  },
+  {
+    "id": 4341007,
+    "name": "Schriever",
+    "state": "LA",
+    "country": "US",
+    "coord": {
+      "lon": -90.810371,
+      "lat": 29.742149
+    }
+  },
+  {
+    "id": 4341033,
+    "name": "Scott",
+    "state": "LA",
+    "country": "US",
+    "coord": {
+      "lon": -92.094566,
+      "lat": 30.23576
+    }
+  },
+  {
+    "id": 4341067,
+    "name": "Seabrook",
+    "state": "LA",
+    "country": "US",
+    "coord": {
+      "lon": -90.013397,
+      "lat": 30.03187
+    }
+  }
+]

@@ -21,7 +21,8 @@ module.exports = {
   variants: {
     extend: {
       placeholderColor: ['hover', 'active'],
-      opacity: ['hover', 'active']
+      opacity: ['hover', 'active'],
+      display: ['group-hover'],
     },
   },
   plugins: [],

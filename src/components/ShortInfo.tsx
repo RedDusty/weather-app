@@ -121,7 +121,7 @@ const ShortInfo: React.FC<{
   }, [weather, load]);
 
   return (
-    <div className="w-full flex flex-col items-center text-black dark:text-white">
+    <div className="w-full flex flex-col items-center text-black dark:text-white mt-14">
       <div className="box-transparent mt-2">
         <p className="text-3xl font-medium">
           {weatherV.city + ', ' + weatherV.country}

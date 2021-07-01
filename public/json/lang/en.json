@@ -1,9 +1,12 @@
 {
   "SEARCH": "Search...",
+  "LATITUDE": "Latitude",
+  "LONGITUDE": "Longitude",
   "CLICK_HIDE": "Click to hide",
   "CLICK_SHOW": "Click to show",
   "FEELS_LIKE": "Feels like: ",
   "ERROR_UNDEFINED": "Unknown error!",
+  "SERVER_ERROR": "An error has occurred on the server.",
   "LOCATION_ERROR": "Weatheredy cannot determine your current location. You must give permission to use your current location, or you can find the desired city yourself.",
   "LOADING": "Loading",
   "DETAILS": "Details",

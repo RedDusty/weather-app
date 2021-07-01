@@ -1,4 +1,4 @@
-import { unitType } from './types';
+import { unitType, cityType } from './types';
 
 export const getCelsius: (arg0: number) => number = (kelvin: number) => {
   return kelvin - 273.15;
@@ -63,6 +63,36 @@ export const getDewPoint: (
       return dew + 273.15;
   }
 };
+
+export async function searchFetch(search: string) {
+  const res: Response = await fetch('json/city.list.json');
+  const json = await res.json();
+
+  let matches: Array<cityType> = json.filter((city: cityType) => {
+    const regex = new RegExp(`${search}`, 'gi');
+    return city.name.match(regex);
+  });
+
+  if (search.length === 0) {
+    matches = [];
+  }
+
+  return matches;
+}
+
+export async function getWeatherByCity(city: string, country: string = 'EN') {
+  const res: Response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city},${country}$units=metric&appid=${process.env.REACT_APP_WEATHER}`)
+  const json = await res.json();
+
+  return json
+}
+
+export async function getWeatherByCoords(latitude: number = 0, longitude: number = 0) {
+  const res: Response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${process.env.REACT_APP_WEATHER}`)
+  const json = await res.json();
+
+  return json
+}
 
 export const getDirection: (arg0: number) => string = (direction: number) => {
   let windDirectional: string | 'N';
