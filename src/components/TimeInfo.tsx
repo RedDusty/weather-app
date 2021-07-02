@@ -44,7 +44,7 @@ const TimeInfo: React.FC<{ weather: weatherType | undefined; load: loadType }> =
       <></>
     );
     return (
-      <div className="flex flex-col items-center text-black dark:text-white">
+      <div className="flex flex-col items-center text-black dark:text-white mb-4">
         <hr
           className={
             'mt-6 mb-2 border-gray-300 dark:border-gray-700' +
