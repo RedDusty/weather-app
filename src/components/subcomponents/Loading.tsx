@@ -1,12 +1,12 @@
 import React from 'react';
 
-const Loading: React.FC = () => {
+const Loading: React.FC<{size: number}> = ({size}) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      width="200px"
-      height="200px"
+      width={`${size / 10}vw`}
+      height={`${size / 10}vh`}
       viewBox="0 0 100 100"
       preserveAspectRatio="xMidYMid"
 			style={{margin: 'auto', background: 'transparent', display: 'block'}}
@@ -16,8 +16,8 @@ const Loading: React.FC = () => {
         cy="50"
         r="0"
         fill="none"
-        stroke="#ffffff"
         strokeWidth="3"
+        className="stroke-current text-black dark:text-white"
       >
         <animate
           attributeName="r"
@@ -45,8 +45,8 @@ const Loading: React.FC = () => {
         cy="50"
         r="0"
         fill="none"
-        stroke="#000000"
         strokeWidth="3"
+        className="stroke-current text-gray-700 dark:text-gray-300"
       >
         <animate
           attributeName="r"

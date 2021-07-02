@@ -44,13 +44,23 @@ function App() {
         fetch: true,
         geoloc: false,
         ip: true,
-        isLoading: false,
+        isLoading: true,
         search: load.search,
         errorMessage: load.errorMessage,
       });
-
-      const resCity = await getWeatherByCity(city, country);
-      if (resCity.code === 200) {
+      const resCity: weatherType = await getWeatherByCity(city, country);
+      if (resCity.cod === 200) {
+        setLoad({
+          error: false,
+          fetch: true,
+          geoloc: false,
+          ip: true,
+          isLoading: false,
+          search: load.search,
+          errorMessage: load.errorMessage,
+        });
+        localStorage.setItem('latitude', String(resCity.coord?.lat || 0));
+        localStorage.setItem('longitude', String(resCity.coord?.lon || 0));
         setWeather(resCity);
       } else {
         setLoad({
@@ -70,12 +80,23 @@ function App() {
         fetch: true,
         geoloc: true,
         ip: false,
-        isLoading: false,
+        isLoading: true,
         search: load.search,
         errorMessage: '',
       });
-      const resCoords = await getWeatherByCoords(lat, lon);
+      const resCoords: weatherType = await getWeatherByCoords(lat, lon);
       if (resCoords.cod === 200) {
+        setLoad({
+          error: false,
+          fetch: true,
+          geoloc: false,
+          ip: true,
+          isLoading: false,
+          search: load.search,
+          errorMessage: load.errorMessage,
+        });
+        localStorage.setItem('latitude', String(resCoords.coord?.lat || 0));
+        localStorage.setItem('longitude', String(resCoords.coord?.lon || 0));
         setWeather(resCoords);
       } else {
         setLoad({
@@ -121,7 +142,7 @@ function App() {
     // NOT DEV
     if (!isDev) {
       // IF SEARCH
-      if (load.search) {
+      if (Boolean(localStorage.getItem('search'))) {
         getWeatherCoord(location.coord.lat || 0, location.coord.lon || 0);
       }
       // STANDARD LOADING
@@ -198,12 +219,12 @@ function App() {
   }, [navigator.geolocation, location.coord]);
   let render = (
     <div className="center">
-      <Loading />
+      <Loading size={500} />
     </div>
   );
   let loading = (
-    <div className="w-screen h-screen z-50 bg-white dark:bg-black bg-opacity-50 dark:bg-opacity-50">
-      <Loading />
+    <div className="w-screen h-screen z-50 bg-white dark:bg-black bg-opacity-50 dark:bg-opacity-50 fixed top-0 left-0 center">
+      <Loading size={500} />
     </div>
   );
   if (load.error) {
@@ -259,9 +280,11 @@ function App() {
       </>
     );
   }
+  const renderDev = (<div className="absolute top-16 right-16 font-medium text-lg select-none bg-white dark:bg-black text-red-700 dark:text-red-300 px-2 py-0.5 rounded-md">DEV</div>)
   return (
     <div className="App bg-white bg-opacity-25 dark:bg-black dark:bg-opacity-25">
-      <Search setLocation={setLocation} />
+      {isDev ? renderDev : <></>}
+      <Search setLocation={setLocation} setLoad={setLoad} load={load} />
       {render}
       {load.isLoading ? loading : <></>}
     </div>

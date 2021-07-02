@@ -4,6 +4,8 @@
   "LONGITUDE": "Longitude",
   "CLICK_HIDE": "Click to hide",
   "CLICK_SHOW": "Click to show",
+  "MORE": "Show more...",
+  "CLOSE": "Close",
   "FEELS_LIKE": "Feels like: ",
   "ERROR_UNDEFINED": "Unknown error!",
   "SERVER_ERROR": "An error has occurred on the server.",

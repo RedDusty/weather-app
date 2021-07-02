@@ -116,6 +116,12 @@ const ShortInfo: React.FC<{
             tempWarnImg: '',
           });
         }
+        if (temp > 273.15 && temp < 298.15) {
+          setTempWarning({
+            tempClassname: 'text-black dark:text-white',
+            tempWarnImg: '',
+          })
+        }
       }
     }
   }, [weather, load]);
